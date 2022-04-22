@@ -1,5 +1,5 @@
 use std::io::{self,Write};
-
+use std::str::FromStr;
 fn prompt_main() {
     let prChar = "madshell $$>> ";
     print!("{0}", prChar);
@@ -30,6 +30,23 @@ fn tokenizator(c : String) -> Command {
   
     command
 }
+enum Coms {
+    echo,
+    ls,
+    pwd
+}
+impl FromStr for Coms {
+    type Err = ();
+    fn from_string(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "echo" => Ok(Coms::echo),
+            "ls" => Ok(Coms::ls),
+            "pwd" => Ok(Coms::pwd),
+            _ => Err(()),
+        }
+    }
+}
+
 fn main() {
 loop {
 
