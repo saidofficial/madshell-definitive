@@ -1,23 +1,37 @@
 use std::io::{self,Write};
 
+fn prompt_main() {
+    let prChar = "madshell $$>> ";
+    print!("{0}", prChar);
+    io::stdout().flush().unwrap();
+}
+
+fn read_com() -> String {
+    let mut userCommand = String::new();
+    io::stdin().read_line(&mut userCommand)
+        .expect("Failed to read command. Try again");
+    println!("!DEBUG: RAW_INPUT: {:?}", userCommand);
+
+    userCommand
+}
+struct Command {
+    keyword : String,
+    args : Vec<String>,
+}
+  
+fn tokenizator(c : String) -> Command {
+    let mut command_split : Vec<String> = c.split_whitespace().map(|s| s.to_string()).collect();
+    println!("!DEBUG: SPLIT_INPUT: {:?}", command_split);
+  
+    let command = Command {
+      keyword : command_split.remove(0),
+      args : command_split,
+    };
+  
+    command
+}
 fn main() {
-    let prChar = "root$madshell>>";
-    loop {
-        print!("{0}", prChar);
-        io::stdout().flush().unwrap();
+loop {
 
-    let mut userCom = String::new();
-    io::stdin().read_line(&mut userCom)
-        .expect("Failed to read");
-    println!("Debug -- {:?}", userCom);
-
-    let comSplit : Vec<&str> = userCom.split(' ').collect();
-    println!("Debug -- {:?}", comSplit);
-
-    let keyword = comSplit[0];
-    let comArgument = &comSplit[1..];
-
-    println!("Debug -- Keyword: {0}", keyword);
-    println!("Debug -- Num of args: {0:?}\nDebug -- Arguments: {1:?}", comArgument.len(), comArgument);
-    }
+}
 }
